@@ -41,6 +41,12 @@ class Week:
             previous = temp
             temp = next
         self.__head = previous
+        
+    def find(self, data):
+        temp = self.__head
+        while temp.data is not data:
+            temp = temp.next
+        return temp
 
     def appendAfter(self, newdata):
         newDay = DayofWeek(newdata)
@@ -76,6 +82,7 @@ def main():
 
 
     my_week.reverse()
+    my_week.find()
     my_week.display()
     my_week.appendAfter("Monday", "Delete Item")
     my_week.remove("Delete Item")
