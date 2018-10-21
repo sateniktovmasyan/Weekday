@@ -1,0 +1,88 @@
+class DayofWeek:
+    def __init__(self, data = None):
+        self.data = data
+        self.next = next
+        self.prev = prev
+class Week:
+    def __init__(self):
+        self.__head = None
+        self.__tail = None
+
+    def settail(self, newdata):
+        self.__tail = DayofWeek(newdata)
+
+    def gettail(self, newdata):
+        self.__tail = DayofWeek(newdata)
+
+    def sethead(self, newdata):
+        self.__head = DayofWeek(newdata)
+
+    def gethead(self, newdata):
+        self.__head = DayofWeek(newdata)
+
+    def show(self):
+        print "Show list"
+        printval = self.__head
+        while printval is not None:
+            print printval.prev.data if hasattr(printval.prev, "data") else None,
+            print printval.data,
+            print printval.next.data if hasattr(printval.next, "data") else None
+
+            printval = printval.next
+        print "*" * 20
+
+    def append(self, newdata):
+        newDay = DayofWeek(newdata, None, None)
+        if self.head is None:
+            self.head = self.tail = newDay
+        else:
+            newDay.prev = self.tail
+            newDay.next = None
+            self.tail.next = newDay
+            self.tail = newDay
+
+    def reverse(self):
+        previous = None
+        temp = self.__head
+        while (temp is not None):
+            next = temp.next
+            temp.next = previous
+            previous = temp
+            temp = next
+        self.__head = previous
+
+
+    def remove(self, node_value):
+        printval = self.head
+
+        while printval is not None:
+            if printval.data == node_value:
+                # if it's not the first element
+                if printval.prev is not None:
+                    printval.prev.next = printval.next
+                    printval.next.prev = printval.prev
+                else:
+                    # otherwise we have no prev (it's None), head is the next one, and prev becomes None
+                    self.head = printval.next
+                    printval.next.prev = None
+
+                printval = printval.next
+
+def main():
+
+    my_week = Week()
+
+    my_week.append("Monday")
+    my_week.append("Tuesday")
+    my_week.append("Wednesday")
+    my_week.append("Thursday")
+    my_week.append("Friday")
+    my_week.append("Saturday")
+    my_week.append("Sunday")
+
+
+    my_week.reverse()
+    my_week.display()
+    my_week.appendAfter("Monday")
+    my_week.remove("Saturday")
+main()
