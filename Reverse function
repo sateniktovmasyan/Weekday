@@ -1,0 +1,56 @@
+class DayofWeek:
+    def __init__(self, data = None):
+        self.data = data
+        self.next = None
+
+class Week:
+    def __init__(self):
+        self.__head = None
+
+    def sethead(self, newdata):
+        self.__head = DayofWeek(newdata)
+
+    def gethead(self, newdata):
+        self.__head = DayofWeek(newdata)
+
+    def display(self):
+        printval = self.__head
+        while printval is not None:
+            print (printval.data)
+            printval = printval.next
+
+
+    def append(self, newdata):
+        newDay = DayofWeek(newdata)
+        if self.__head is None:
+            self.__head = newDay
+        else:
+            temp = self.__head
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = newDay
+
+    def reverse(self):
+        previous = None
+        temp = self.__head
+        while (temp is not None):
+            next = temp.next
+            temp.next = previous
+            prev = temp
+            temp = next
+        self.__head = previous
+
+def main():
+    my_week = Week()
+    my_week.append("Monday")
+    my_week.append("Tuesday")
+    my_week.append("Wednesday")
+    my_week.append("Thursday")
+    my_week.append("Friday")
+    my_week.append("Saturday")
+    my_week.append("Sunday")
+
+
+    my_week.reverse()
+    my_week.display()
+main()
