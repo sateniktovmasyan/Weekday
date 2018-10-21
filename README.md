@@ -1,0 +1,2 @@
+# Weekday
+Using Linked lists
