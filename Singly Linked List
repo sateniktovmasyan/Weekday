@@ -18,7 +18,7 @@ class Week:
         while printval is not None:
             print (printval.data)
             printval = printval.next
-        print "----------"
+        print "*" * 20
 
     def append(self, newdata):
         newDay = DayofWeek(newdata)
