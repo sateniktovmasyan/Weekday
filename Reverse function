@@ -18,7 +18,7 @@ class Week:
         while printval is not None:
             print (printval.data)
             printval = printval.next
-
+        print "----------"
 
     def append(self, newdata):
         newDay = DayofWeek(newdata)
@@ -28,6 +28,8 @@ class Week:
             temp = self.__head
             while temp.next is not None:
                 temp = temp.next
+
+
             temp.next = newDay
 
     def reverse(self):
@@ -36,12 +38,19 @@ class Week:
         while (temp is not None):
             next = temp.next
             temp.next = previous
-            prev = temp
+            previous = temp
             temp = next
         self.__head = previous
 
+    def appendAfter(self, newdata):
+        newDay = DayofWeek(newdata)
+        newDay.next = self.__head
+        self.__head = newDay
+
 def main():
+
     my_week = Week()
+
     my_week.append("Monday")
     my_week.append("Tuesday")
     my_week.append("Wednesday")
@@ -53,4 +62,5 @@ def main():
 
     my_week.reverse()
     my_week.display()
+    my_week.appendAfter("Monday")
 main()
