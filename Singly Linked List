@@ -77,6 +77,6 @@ def main():
 
     my_week.reverse()
     my_week.display()
-    my_week.appendAfter("Monday")
-    my_week.remove("Saturday")
+    my_week.appendAfter("Monday", "Delete Item")
+    my_week.remove("Delete Item")
 main()
