@@ -1,8 +1,9 @@
 class DayofWeek:
-    def __init__(self, next = None, prev = None, data = None):
+    def __init__(self, data=None):
         self.data = data
-        self.next = next
-        self.prev = prev
+        self.next = None
+        self.prev = None
+
 
 class Week:
     def __init__(self):
@@ -14,51 +15,77 @@ class Week:
     def gethead(self, newdata):
         self.__head = DayofWeek(newdata)
 
+    def display(self):
+        printval = self.__head
+        while printval is not None:
+            print 'printing' + str(printval.prev.data)
+            printval = printval.next
+        print "*" * 20
+
     def append(self, newdata):
         newDay = DayofWeek(newdata)
-        newDay.next = None
         if self.__head is None:
-            newDay.previous = None
+            newDay.prev = newDay
+            newDay.next = None
             self.__head = newDay
         else:
             temp = self.__head
             while temp.next is not None:
                 temp = temp.next
+
+            #if temp.prev is None:
+             #   temp.prev = newDay
+
+            newDay.prev = temp
+            #print newDay.prev.data
+            newDay.next = None
             temp.next = newDay
-            newDay.previous = temp
 
-    def display(self):
+            #if temp.prev is not None:
+            print temp.prev.data
+            #print temp.prev.data
+
+
+    def reverse(self):
+        previous = None
         temp = self.__head
-        while temp is not None:
-            print temp.data
+        while (temp is not None):
+            next = temp.next
+            temp.next = previous
+            previous = temp
+            temp = next
+        self.__head = previous
+
+    def find(self, data):
+        temp = self.__head
+        while temp.data is not data:
             temp = temp.next
+        print temp.data + " is found\n"
+        return temp
 
-    def appendAfter(self, previousDay, newDay):
-        new = WeekDay(newDay)
-        previous_Day = self.find(previousDay)
+    def appendAfter(self, newdata):
+        newDay = DayofWeek(newdata)
+        newDay.next = self.__head
+        self.__head = newDay
 
-        if previous_Day is None:
-            print("not in the list")
+    def remove(self, node_value):
+        previous_node = None
+        current_node = self.__head
+        while current_node:
+            if current_node.data == node_value:
+                if previous_node:
+                    previous_node.next = current_node.next
+                else:
+                    self.__head = current_node.next
+                return True
 
-        new.next = previous_Day.next
-        previous_Day.next = new
-        new.previous = previous_Day
+            previous_node = current_node
+            current_node = current_node.next
 
-        if new.next is not None:
-            new.next.previous = new
 
-    def delete(self, Day):
-        deletedata = self.find(Day)
-
-        if self.__head == deletedata:
-            self.__head = deletedata.next
-        if deletedata.next is not None:
-            deletedata.next.previous = deletedata.previous
-        if deletedata.previous is not None:
-            deletedata.previous.next = deletedata.next
 def main():
-
     my_week = Week()
+
     my_week.append("Monday")
     my_week.append("Tuesday")
     my_week.append("Wednesday")
@@ -67,12 +94,13 @@ def main():
     my_week.append("Saturday")
     my_week.append("Sunday")
 
-
-#    my_week.reverse()
-    my_week.appendAfter("Monday", "DeleteItem")
-    my_week.delete("DeleteItem")
+    #my_week.reverse()
+    #my_week.find("Monday")
     my_week.display()
- #   my_week.search()
+    #my_week.appendAfter("Another day")
+    #my_week.remove("Monday")
+
+    #my_week.display()
 
 
 main()
